@@ -1313,8 +1313,10 @@ class FormBuilder
             return $old;
         }
         if (function_exists('app')) {
-            $hasNullMiddleware = app("Illuminate\Contracts\Http\Kernel")
-                ->hasMiddleware(ConvertEmptyStringsToNull::class);
+            $hasNullMiddleware = in_array(
+                    'Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull',
+                    app('Illuminate\Routing\Router')->gatherRouteMiddleware(app('Illuminate\Routing\Router')->current())
+                );
 
             if ($hasNullMiddleware
                 && is_null($old)
