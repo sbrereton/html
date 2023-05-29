@@ -46,6 +46,10 @@ trait FormAccessible
         if ($this->isNestedModel($keys[0])) {
             $relatedModel = $this->getRelation($keys[0]);
 
+            if(is_null($relatedModel)){
+                return null;
+            }
+
             unset($keys[0]);
             $key = implode('.', $keys);
 
