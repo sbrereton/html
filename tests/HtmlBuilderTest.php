@@ -7,6 +7,7 @@ use Illuminate\Routing\RouteCollection;
 use Illuminate\Routing\UrlGenerator;
 use Mockery as m;
 
+#[\AllowDynamicProperties]
 class HtmlBuilderTest extends PHPUnit\Framework\TestCase
 {
 

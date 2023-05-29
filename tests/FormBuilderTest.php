@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Session\Store;
 use Mockery as m;
 
+#[\AllowDynamicProperties]
 class FormBuilderTest extends PHPUnit\Framework\TestCase
 {
     /**
@@ -555,8 +556,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
             [],
             ['L' => ['data-foo' => 'bar', 'disabled']]
         );
-        $this->assertEquals($select,
-            '<select name="size"><option value="L" data-foo="bar" disabled>Large</option><option value="S">Small</option></select>');
+        $this->assertEquals('<select name="size"><option value="L" data-foo="bar" disabled>Large</option><option value="S">Small</option></select>',
+            $select);
 
         $select = $this->formBuilder->select(
             'size',
@@ -575,8 +576,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
         );
 
         $this->assertEquals(
-            $select,
-            '<select class="class-name" id="select-id" name="size"><optgroup label="Large sizes"><option value="L">Large</option><option value="XL">Extra Large</option></optgroup><option value="S">Small</option></select>'
+            '<select class="class-name" id="select-id" name="size"><optgroup label="Large sizes"><option value="L">Large</option><option value="XL">Extra Large</option></optgroup><option value="S">Small</option></select>',
+            $select
         );
 
         $select = $this->formBuilder->select(
@@ -606,8 +607,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
         );
 
         $this->assertEquals(
-            $select,
-            '<select name="size"><optgroup label="Large sizes"><option value="L" disabled>Large</option><option value="XL">Extra Large</option></optgroup><option value="M" disabled>Medium</option><optgroup label="Small sizes" disabled><option value="S">Small</option><option value="XS">Extra Small</option></optgroup></select>'
+            '<select name="size"><optgroup label="Large sizes"><option value="L" disabled>Large</option><option value="XL">Extra Large</option></optgroup><option value="M" disabled>Medium</option><optgroup label="Small sizes" disabled><option value="S">Small</option><option value="XS">Extra Small</option></optgroup></select>',
+            $select
         );
     }
 
@@ -650,8 +651,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
           'L',
           ['placeholder' => 'Select One...']
         );
-        $this->assertEquals($select,
-          '<select name="size"><option value="">Select One...</option><option value="L" selected="selected">Large</option><option value="S">Small</option></select>');
+        $this->assertEquals('<select name="size"><option value="">Select One...</option><option value="L" selected="selected">Large</option><option value="S">Small</option></select>',
+            $select);
 
         $select = $this->formBuilder->select(
             'encoded_html',
@@ -659,8 +660,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
             null,
             ['placeholder' => 'Select the &nbsp;']
         );
-        $this->assertEquals($select,
-            '<select name="encoded_html"><option selected="selected" value="">Select the &nbsp;</option><option value="no_break_space">&nbsp;</option><option value="ampersand">&amp;</option><option value="lower_than">&lt;</option></select>'
+        $this->assertEquals('<select name="encoded_html"><option selected="selected" value="">Select the &nbsp;</option><option value="no_break_space">&nbsp;</option><option value="ampersand">&amp;</option><option value="lower_than">&lt;</option></select>',
+            $select
         );
     }
 

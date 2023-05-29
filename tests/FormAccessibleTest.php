@@ -12,6 +12,7 @@ use Illuminate\Routing\UrlGenerator;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Mockery as m;
 
+#[\AllowDynamicProperties]
 class FormAccessibleTest extends PHPUnit\Framework\TestCase
 {
     protected function setUp(): void
