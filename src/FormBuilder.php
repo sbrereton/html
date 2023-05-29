@@ -85,7 +85,7 @@ class FormBuilder
      *
      * @var array
      */
-    protected array $reserved = ['method', 'url', 'route', 'action', 'files'];
+    protected array $reserved = ['method', 'url', 'route', 'action', 'files', 'method_attributes'];
 
     /**
      * The form methods that should be spoofed, in uppercase.
@@ -152,7 +152,7 @@ class FormBuilder
          * field that will instruct the Symfony request to pretend the method is a
          * different method than it actually is, for convenience from the forms.
          **/
-        $append = $this->getAppendage($method);
+        $append = $this->getAppendage($method, Arr::get($options, 'method_attributes', null));
 
         if (isset($options['files']) && $options['files']) {
             $options['enctype'] = 'multipart/form-data';
@@ -1249,18 +1249,18 @@ class FormBuilder
      * Get the form appendage for the given method.
      *
      * @param string $method
-     *
+     * @param array|null $method_attributes
      * @return string
      */
-    protected function getAppendage(string $method): string
+    protected function getAppendage(string $method, array|null $method_attributes = null): string
     {
         list($method, $appendage) = [strtoupper($method), ''];
 
-        // If the HTTP method is in this list of spoofed methods, we will attach the
+        // If the HTTP method is in this list of spoofed methods, we will attach th
         // method spoofer hidden input to the form. This allows us to use regular
         // form to initiate PUT and DELETE requests in addition to the typical.
         if (in_array($method, $this->spoofedMethods)) {
-            $appendage .= $this->hidden('_method', $method);
+            $appendage .= $this->hidden('_method', $method, $method_attributes ? $method_attributes : []);
         }
 
         // If the method is something other than GET we will go ahead and attach the
