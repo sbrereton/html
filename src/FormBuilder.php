@@ -729,7 +729,7 @@ class FormBuilder
      *
      * @return string
      */
-    public function selectMonth(string $name, string $selected = null, array $options = [], string $format = '%B'): string
+    public function selectMonth(string $name, string $selected = null, array $options = [], string $format = 'F'): string
     {
         $months = [];
 
