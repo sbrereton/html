@@ -432,14 +432,14 @@ class FormBuilder
      * Create a date input field.
      *
      * @param string $name
-     * @param string|DateTime|null $value
+     * @param string|DateTimeInterface|null $value
      * @param array $options
      *
      * @return string
      */
-    public function date(string $name, string|DateTime $value = null, array $options = []): string
+    public function date(string $name, string|DateTimeInterface $value = null, array $options = []): string
     {
-        if ($value instanceof DateTime) {
+        if (in_array("DateTimeInterface", class_implements($value))) {
             $value = $value->format('Y-m-d');
         }
 
