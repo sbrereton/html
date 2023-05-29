@@ -1,10 +1,10 @@
 <?php
 
 use Carbon\Carbon;
-use Collective\Html\Eloquent\FormAccessible;
+use LaravelLux\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
-use Collective\Html\FormBuilder;
-use Collective\Html\HtmlBuilder;
+use LaravelLux\Html\FormBuilder;
+use LaravelLux\Html\HtmlBuilder;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteCollection;
@@ -65,8 +65,8 @@ class FormAccessibleTest extends PHPUnit\Framework\TestCase
 
         $this->formBuilder->setModel($model);
 
-        $this->assertEquals($this->formBuilder->getValueAttribute('related[string]'), 'ponmlkjihgfedcba');
-        $this->assertEquals($this->formBuilder->getValueAttribute('related[address][street]'), '123 Evergreen Terrace');
+        $this->assertEquals('ponmlkjihgfedcba', $this->formBuilder->getValueAttribute('related[string]'));
+        $this->assertEquals('123 Evergreen Terrace', $this->formBuilder->getValueAttribute('related[address][street]'));
     }
 
     public function testItCanGetRelatedValueForForms()
@@ -80,7 +80,7 @@ class FormAccessibleTest extends PHPUnit\Framework\TestCase
         $model = new ModelThatUsesForms($this->modelData);
         $this->formBuilder->setModel($model);
 
-        $this->assertEquals($this->formBuilder->getValueAttribute('email'), 'mutated@tjshafer.com');
+        $this->assertEquals('mutated@tjshafer.com', $this->formBuilder->getValueAttribute('email'));
     }
 
     public function testItReturnsSameResultWithAndWithoutThisFeature()

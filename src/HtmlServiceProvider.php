@@ -1,6 +1,6 @@
 <?php
 
-namespace Collective\Html;
+namespace LaravelLux\Html;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
@@ -14,16 +14,74 @@ class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
      *
      * @var array
      */
-    protected $directives = ['entities','decode','script','style','image','favicon','link','secureLink','linkAsset','linkSecureAsset','linkRoute','linkAction','mailto','email','ol','ul','dl','meta','tag','open','model','close','token','label','input','text','password','hidden','email','tel','number','date','datetime','datetimeLocal','time','url','file','textarea','select','selectRange','selectYear','selectMonth','getSelectOption','checkbox','radio','reset','image','color','submit','button','old'
+    protected array $directives = [
+        'entities',
+        'decode',
+        'script',
+        'style',
+        'image',
+        'favicon',
+        'link',
+        'secureLink',
+        'linkAsset',
+        'linkSecureAsset',
+        'linkRoute',
+        'linkAction',
+        'mailto',
+        'email',
+        'ol',
+        'ul',
+        'dl',
+        'meta',
+        'tag',
+        'open',
+        'model',
+        'close',
+        'token',
+        'label',
+        'input',
+        'text',
+        'password',
+        'hidden',
+        'email',
+        'tel',
+        'number',
+        'date',
+        'datetime',
+        'datetimeLocal',
+        'time',
+        'url',
+        'file',
+        'textarea',
+        'select',
+        'selectRange',
+        'selectYear',
+        'selectMonth',
+        'getSelectOption',
+        'checkbox',
+        'radio',
+        'reset',
+        'image',
+        'color',
+        'submit',
+        'button',
+        'old'
     ];
+
+    public function boot(): void
+    {
+        $this->registerPublishables();
+    }
 
     /**
      * Register the service provider.
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/html-forms.php', 'html-forms');
+
         $this->registerHtmlBuilder();
 
         $this->registerFormBuilder();
@@ -39,7 +97,7 @@ class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
      *
      * @return void
      */
-    protected function registerHtmlBuilder()
+    protected function registerHtmlBuilder(): void
     {
         $this->app->singleton('html', function ($app) {
             return new HtmlBuilder($app['url'], $app['view']);
@@ -51,7 +109,7 @@ class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
      *
      * @return void
      */
-    protected function registerFormBuilder()
+    protected function registerFormBuilder(): void
     {
         $this->app->singleton('form', function ($app) {
             $form = new FormBuilder($app['html'], $app['url'], $app['view'], $app['session.store']->token(), $app['request']);
@@ -65,7 +123,7 @@ class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
      *
      * @return void
      */
-    protected function registerBladeDirectives()
+    protected function registerBladeDirectives(): void
     {
         $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
             $namespaces = [
@@ -93,8 +151,19 @@ class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return ['html', 'form', HtmlBuilder::class, FormBuilder::class];
+    }
+
+    protected function registerPublishables(): void
+    {
+        if (! $this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->publishes([
+            __DIR__.'/../config/html-forms.php' => config_path('html-forms.php'),
+        ], 'config');
     }
 }

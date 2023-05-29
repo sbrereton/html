@@ -1,11 +1,11 @@
 <?php
 
-namespace Collective\Html;
+namespace LaravelLux\Html;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Collective\Html\FormBuilder
+ * @see FormBuilder
  */
 class FormFacade extends Facade
 {
@@ -15,7 +15,7 @@ class FormFacade extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'form';
     }

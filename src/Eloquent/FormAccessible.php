@@ -1,6 +1,6 @@
 <?php
 
-namespace Collective\Html\Eloquent;
+namespace LaravelLux\Html\Eloquent;
 
 use ReflectionClass;
 use ReflectionMethod;
@@ -21,7 +21,7 @@ trait FormAccessible
      *
      * @return mixed
      */
-    public function getFormValue($key)
+    public function getFormValue(string $key): mixed
     {
         $value = $this->getAttributeFromArray($key);
 
@@ -63,11 +63,11 @@ trait FormAccessible
     /**
      * Check for a nested model.
      *
-     * @param  string  $key
+     * @param string $key
      *
      * @return bool
      */
-    public function isNestedModel($key)
+    public function isNestedModel(string $key): bool
     {
         return in_array($key, array_keys($this->getRelations()));
     }
@@ -77,7 +77,7 @@ trait FormAccessible
      *
      * @return bool
      */
-    public function hasFormMutator($key)
+    public function hasFormMutator($key): bool
     {
         $methods = $this->getReflection()->getMethods(ReflectionMethod::IS_PUBLIC);
 

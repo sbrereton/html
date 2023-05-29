@@ -1,7 +1,8 @@
 <?php
 
-use Collective\Html\FormBuilder;
-use Collective\Html\HtmlBuilder;
+use Carbon\Carbon;
+use LaravelLux\Html\FormBuilder;
+use LaravelLux\Html\HtmlBuilder;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -17,7 +18,7 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
     /**
      * @var FormBuilder
      */
-    protected $formBuilder;
+    protected FormBuilder $formBuilder;
 
     /**
      * Setup the test environment.
@@ -59,8 +60,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('<input name="person[name]" type="text" value="John">', $name);
         $this->assertEquals('<input name="person[surname]" type="text" value="Doe">', $surname);
 
-        $checked = $this->formBuilder->checkbox("agree", 1);
-        $unchecked = $this->formBuilder->checkbox("no_value", 1);
+        $checked = $this->formBuilder->checkbox("agree");
+        $unchecked = $this->formBuilder->checkbox("no_value");
         $this->assertEquals('<input checked="checked" name="agree" type="checkbox" value="1">', $checked);
         $this->assertEquals('<input name="no_value" type="checkbox" value="1">', $unchecked);
 
@@ -281,11 +282,11 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
     public function testFormMonth()
     {
         $form1 = $this->formBuilder->month('foo');
-        $form2 = $this->formBuilder->month('foo', \Carbon\Carbon::now());
+        $form2 = $this->formBuilder->month('foo', Carbon::now());
         $form3 = $this->formBuilder->month('foo', null, ['class' => 'span2']);
 
         $this->assertEquals('<input name="foo" type="month">', $form1);
-        $this->assertEquals('<input name="foo" type="month" value="' . \Carbon\Carbon::now()->format('Y-m') . '">',
+        $this->assertEquals('<input name="foo" type="month" value="' . Carbon::now()->format('Y-m') . '">',
           $form2);
         $this->assertEquals('<input class="span2" name="foo" type="month">', $form3);
     }
@@ -338,12 +339,12 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
     {
         $form1 = $this->formBuilder->date('foo');
         $form2 = $this->formBuilder->date('foo', '2015-02-20');
-        $form3 = $this->formBuilder->date('foo', \Carbon\Carbon::now());
+        $form3 = $this->formBuilder->date('foo', Carbon::now());
         $form4 = $this->formBuilder->date('foo', null, ['class' => 'span2']);
 
         $this->assertEquals('<input name="foo" type="date">', $form1);
         $this->assertEquals('<input name="foo" type="date" value="2015-02-20">', $form2);
-        $this->assertEquals('<input name="foo" type="date" value="' . \Carbon\Carbon::now()->format('Y-m-d') . '">',
+        $this->assertEquals('<input name="foo" type="date" value="' . Carbon::now()->format('Y-m-d') . '">',
           $form3);
         $this->assertEquals('<input class="span2" name="foo" type="date">', $form4);
     }
@@ -351,11 +352,11 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
     public function testFormTime()
     {
         $form1 = $this->formBuilder->time('foo');
-        $form2 = $this->formBuilder->time('foo', \Carbon\Carbon::now()->format('H:i'));
+        $form2 = $this->formBuilder->time('foo', Carbon::now()->format('H:i'));
         $form3 = $this->formBuilder->time('foo', null, ['class' => 'span2']);
 
         $this->assertEquals('<input name="foo" type="time">', $form1);
-        $this->assertEquals('<input name="foo" type="time" value="' . \Carbon\Carbon::now()->format('H:i') . '">',
+        $this->assertEquals('<input name="foo" type="time" value="' . Carbon::now()->format('H:i') . '">',
           $form2);
         $this->assertEquals('<input class="span2" name="foo" type="time">', $form3);
     }
@@ -374,11 +375,11 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
     public function testFormWeek()
     {
         $form1 = $this->formBuilder->week('foo');
-        $form2 = $this->formBuilder->week('foo', \Carbon\Carbon::now());
+        $form2 = $this->formBuilder->week('foo', Carbon::now());
         $form3 = $this->formBuilder->week('foo', null, ['class' => 'span2']);
 
         $this->assertEquals('<input name="foo" type="week">', $form1);
-        $this->assertEquals('<input name="foo" type="week" value="' . \Carbon\Carbon::now()->format('Y-\WW') . '">',
+        $this->assertEquals('<input name="foo" type="week" value="' . Carbon::now()->format('Y-\WW') . '">',
           $form2);
         $this->assertEquals('<input class="span2" name="foo" type="week">', $form3);
     }
@@ -423,8 +424,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
           ['L' => 'Large', 'S' => 'Small'],
           'L'
         );
-        $this->assertEquals($select,
-          '<select name="size"><option value="L" selected="selected">Large</option><option value="S">Small</option></select>');
+        $this->assertEquals('<select name="size"><option value="L" selected="selected">Large</option><option value="S">Small</option></select>',
+            $select);
 
         $select = $this->formBuilder->select(
             'size',
@@ -433,8 +434,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
             ['multiple']
         );
         $this->assertEquals(
-            $select,
-            '<select multiple name="size"><option value="0">All Sizes</option><option value="L">Large</option><option value="M" selected="selected">Medium</option><option value="S">Small</option></select>');
+            '<select multiple name="size"><option value="0">All Sizes</option><option value="L">Large</option><option value="M" selected="selected">Medium</option><option value="S">Small</option></select>',
+            $select);
 
         $select = $this->formBuilder->select(
           'size',
@@ -442,8 +443,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
           null,
           ['class' => 'class-name', 'id' => 'select-id']
         );
-        $this->assertEquals($select,
-          '<select class="class-name" id="select-id" name="size"><option value="L">Large</option><option value="S">Small</option></select>');
+        $this->assertEquals('<select class="class-name" id="select-id" name="size"><option value="L">Large</option><option value="S">Small</option></select>',
+            $select);
 
         $this->formBuilder->label('select-name-id');
         $select = $this->formBuilder->select(
@@ -452,7 +453,7 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
           null,
           ['name' => 'select-name']
         );
-        $this->assertEquals($select, '<select name="select-name" id="select-name-id"></select>');
+        $this->assertEquals('<select name="select-name" id="select-name-id"></select>', $select);
 
         $select = $this->formBuilder->select(
             'size',
@@ -527,7 +528,7 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
         $this->assertEquals($select,
             '<select name="size"><option value="L" data-foo="bar" disabled>Large</option><option value="S">Small</option></select>');
 
-        $store = new Store('name', new \SessionHandler());
+        $store = new Store('name', new SessionHandler());
         $store->put('_old_input', ['countries' => ['1']]);
         $this->formBuilder->setSessionStore($store);
 
@@ -540,7 +541,7 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
 
         $select = $this->formBuilder->select('avc', [1 => 'Yes', 0 => 'No'], true, ['placeholder' => 'Select']);
         $this->assertEquals(
-            '<select name="avc"><option value="">Select</option><option value="1" selected>Yes</option><option value="0" >No</option></select>',
+            '<select name="avc"><option value="">Select</option><option value="1" selected="selected">Yes</option><option value="0">No</option></select>',
             $select
         );
     }
@@ -628,8 +629,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
 
         $session->shouldReceive('getOldInput')->once()->with('size.key')->andReturn(null);
         $select = $this->formBuilder->select('size[key]', $list);
-        $this->assertEquals($select,
-          '<select name="size[key]"><option value="L">Large</option><option value="M">Medium</option><option value="S" selected="selected">Small</option></select>');
+        $this->assertEquals('<select name="size[key]"><option value="L">Large</option><option value="M">Medium</option><option value="S" selected="selected">Small</option></select>',
+            $select);
     }
 
     public function testFormWithOptionalPlaceholder()
@@ -640,8 +641,8 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
           null,
           ['placeholder' => 'Select One...']
         );
-        $this->assertEquals($select,
-          '<select name="size"><option selected="selected" value="">Select One...</option><option value="L">Large</option><option value="S">Small</option></select>');
+        $this->assertEquals('<select name="size"><option selected="selected" value="">Select One...</option><option value="L">Large</option><option value="S">Small</option></select>',
+            $select);
 
         $select = $this->formBuilder->select(
           'size',

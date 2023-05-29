@@ -1,8 +1,9 @@
 <?php
 
-namespace Collective\Html;
+namespace LaravelLux\Html;
 
 use BadMethodCallException;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 
@@ -14,7 +15,7 @@ trait Componentable
      *
      * @var array
      */
-    protected static $components = [];
+    protected static array $components = [];
 
     /**
      * Register a custom component.
@@ -25,7 +26,7 @@ trait Componentable
      *
      * @return void
      */
-    public static function component($name, $view, array $signature)
+    public static function component($name, $view, array $signature): void
     {
         static::$components[$name] = compact('view', 'signature');
     }
@@ -37,7 +38,7 @@ trait Componentable
      *
      * @return bool
      */
-    public static function hasComponent($name)
+    public static function hasComponent($name): bool
     {
         return isset(static::$components[$name]);
     }
@@ -48,16 +49,16 @@ trait Componentable
      * @param        $name
      * @param  array $arguments
      *
-     * @return HtmlString
+     * @return string
      */
-    protected function renderComponent($name, array $arguments)
+    protected function renderComponent($name, array $arguments): string
     {
         $component = static::$components[$name];
         $data = $this->getComponentData($component['signature'], $arguments);
 
-        return new HtmlString(
+        return (new HtmlString(
           $this->view->make($component['view'], $data)->render()
-        );
+        ))->toHtml();
     }
 
     /**
@@ -68,7 +69,7 @@ trait Componentable
      *
      * @return array
      */
-    protected function getComponentData(array $signature, array $arguments)
+    protected function getComponentData(array $signature, array $arguments): array
     {
         $data = [];
 
@@ -93,14 +94,14 @@ trait Componentable
     /**
      * Dynamically handle calls to the class.
      *
-     * @param  string $method
-     * @param  array  $parameters
+     * @param string $method
+     * @param array $parameters
      *
-     * @return \Illuminate\Contracts\View\View|mixed
+     * @return string
      *
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters)
     {
         if (static::hasComponent($method)) {
             return $this->renderComponent($method, $parameters);

@@ -51,3 +51,30 @@ $capsule->schema()->create('models', function (Blueprint $table) {
     $table->string('email');
     $table->timestamps();
 });
+
+/*
+ * Load the configuration.
+ */
+$config = require __DIR__.'/config/html-forms.php';
+function config($key = null, $default = null)
+{
+    global $config;
+
+    if (is_null($key)) {
+        return $config;
+    }
+
+    $keys = explode('.', $key);
+    array_shift($keys);
+
+    $value = $config;
+    foreach ($keys as $segment) {
+        if (!isset($value[$segment])) {
+            return $default;
+        }
+
+        $value = $value[$segment];
+    }
+
+    return $value;
+}

@@ -1,11 +1,11 @@
 <?php
 
-namespace Collective\Html;
+namespace LaravelLux\Html;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Collective\Html\HtmlBuilder
+ * @see HtmlBuilder
  */
 class HtmlFacade extends Facade
 {
@@ -15,7 +15,7 @@ class HtmlFacade extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'html';
     }

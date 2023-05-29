@@ -1,13 +1,17 @@
 {
-    "name": "laravelcollective/html",
+    "name": "laravellux/html",
     "description": "HTML and Form Builders for the Laravel Framework",
     "license": "MIT",
-    "homepage": "https://laravelcollective.com",
+    "homepage": "https://website.com.se",
     "support": {
-        "issues": "https://github.com/LaravelCollective/html/issues",
-        "source": "https://github.com/LaravelCollective/html"
+        "issues": "https://github.com/laravellux/html/issues",
+        "source": "https://github.com/laravellux/html"
     },
     "authors": [
+        {
+            "name": "Adam Mudd",
+            "email": "admin@adammudd.co.uk"
+        },
         {
             "name": "Adam Engebretson",
             "email": "adam@laravelcollective.com"
@@ -32,7 +36,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Collective\\Html\\": "src/"
+            "LaravelLux\\Html\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -44,15 +48,14 @@
         },
         "laravel": {
             "providers": [
-                "Collective\\Html\\HtmlServiceProvider"
+                "LaravelLux\\Html\\HtmlServiceProvider"
             ],
             "aliases": {
-                "Form": "Collective\\Html\\FormFacade",
-                "Html": "Collective\\Html\\HtmlFacade"
+                "Form": "LaravelLux\\Html\\FormFacade",
+                "Html": "LaravelLux\\Html\\HtmlFacade"
             }
         }
     },
     "minimum-stability": "dev",
-    "abandoned": "spatie/laravel-html",
     "prefer-stable": true
 }
