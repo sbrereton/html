@@ -439,6 +439,8 @@ class FormBuilder
      */
     public function date(string $name, string|DateTimeInterface $value = null, array $options = []): string
     {
+        $value ??= $this->getValueAttribute($name, $value);
+
         if (in_array("DateTimeInterface", class_implements($value))) {
             $value = $value->format('Y-m-d');
         }
