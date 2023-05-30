@@ -726,15 +726,15 @@ class FormBuilder
     /**
      * Create a select year field.
      *
-     * @param string|null $name
-     * @param string|null $begin
-     * @param string|null $end
+     * @param string $name
+     * @param string $begin
+     * @param string $end
      * @param string|null $selected
      * @param array|null $options
      *
      * @return mixed
      */
-    public function selectYear(string $name = null, string $begin = null, string $end = null, string $selected = null, array $options = null): mixed
+    public function selectYear(string $name, string $begin, string $end, string $selected = null, array $options = null): mixed
     {
         return call_user_func_array([$this, 'selectRange'], func_get_args());
     }
