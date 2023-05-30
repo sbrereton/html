@@ -441,7 +441,7 @@ class FormBuilder
     {
         $value ??= $this->getValueAttribute($name, $value);
 
-        if (in_array("DateTimeInterface", class_implements($value))) {
+        if ($value instanceof DateTimeInterface) {
             $value = $value->format('Y-m-d');
         }
 
