@@ -3,7 +3,6 @@
 namespace LaravelLux\Html;
 
 use BadMethodCallException;
-use DateTime;
 use DateTimeInterface;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\Session\Session;
@@ -249,11 +248,12 @@ class FormBuilder
     /**
      * Enable or disable automatic csrf_token injection
      *
+     * @param bool $inject_token
      * @return self
      */
-    public function withoutCsrf(): static
+    public function withoutCsrf(bool $inject_token = false): static
     {
-        $this->injectCsrfToken = false;
+        $this->injectCsrfToken = $inject_token;
 
         return $this;
     }
@@ -470,14 +470,14 @@ class FormBuilder
      * Create a datetime input field.
      *
      * @param string $name
-     * @param string|DateTime|null $value
+     * @param string|DateTimeInterface|null $value
      * @param array $options
      *
      * @return string
      */
-    public function datetime(string $name, string|DateTime $value = null, array $options = []): string
+    public function datetime(string $name, string|DateTimeInterface $value = null, array $options = []): string
     {
-        if ($value instanceof DateTime) {
+        if ($value instanceof DateTimeInterface) {
             $value = $value->format(DateTimeInterface::RFC3339);
         }
 
@@ -488,15 +488,15 @@ class FormBuilder
      * Create a datetime-local input field.
      *
      * @param string $name
-     * @param string|DateTime|null $value
+     * @param string|DateTimeInterface|null $value
      * @param array $options
      *
      * @return string
      * @noinspection PhpUnused
      */
-    public function datetimeLocal(string $name, string|DateTime $value = null, array $options = []): string
+    public function datetimeLocal(string $name, string|DateTimeInterface $value = null, array $options = []): string
     {
-        if ($value instanceof DateTime) {
+        if ($value instanceof DateTimeInterface) {
             $value = $value->format('Y-m-d\TH:i');
         }
 
@@ -507,14 +507,14 @@ class FormBuilder
      * Create a time input field.
      *
      * @param string $name
-     * @param string|DateTime|null $value
+     * @param string|DateTimeInterface|null $value
      * @param array $options
      *
      * @return string
      */
-    public function time(string $name, string|DateTime $value = null, array $options = []): string
+    public function time(string $name, string|DateTimeInterface $value = null, array $options = []): string
     {
-        if ($value instanceof DateTime) {
+        if ($value instanceof DateTimeInterface) {
             $value = $value->format('H:i');
         }
 
@@ -539,14 +539,14 @@ class FormBuilder
      * Create a week input field.
      *
      * @param string $name
-     * @param string|DateTime|null $value
+     * @param string|DateTimeInterface|null $value
      * @param array $options
      *
      * @return string
      */
-    public function week(string $name, string|DateTime $value = null, array $options = []): string
+    public function week(string $name, string|DateTimeInterface $value = null, array $options = []): string
     {
-        if ($value instanceof DateTime) {
+        if ($value instanceof DateTimeInterface) {
             $value = $value->format('Y-\WW');
         }
 
@@ -1063,14 +1063,14 @@ class FormBuilder
      * Create a month input field.
      *
      * @param string $name
-     * @param string|DateTime|null $value
+     * @param string|DateTimeInterface|null $value
      * @param array $options
      *
      * @return string
      */
-    public function month(string $name, string|DateTime $value = null, array $options = []): string
+    public function month(string $name, string|DateTimeInterface $value = null, array $options = []): string
     {
-        if ($value instanceof DateTime) {
+        if ($value instanceof DateTimeInterface) {
             $value = $value->format('Y-m');
         }
 
