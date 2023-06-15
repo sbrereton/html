@@ -224,14 +224,14 @@ class HtmlBuilder
      *
      * @param string $name
      * @param string|null $title
-     * @param array $parameters
+     * @param mixed $parameters
      * @param array $attributes
      * @param bool|null $secure
      * @param bool $escape
      *
      * @return string
      */
-    public function linkRoute(string $name, string $title = null, array $parameters = [], array $attributes = [], bool $secure = null, bool $escape = true): string
+    public function linkRoute(string $name, string $title = null, mixed $parameters = [], array $attributes = [], bool $secure = null, bool $escape = true): string
     {
         return $this->link($this->url->route($name, $parameters), $title, $attributes, $secure, $escape);
     }
