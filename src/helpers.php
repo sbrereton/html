@@ -43,12 +43,12 @@ if (! function_exists('link_to_route')) {
      *
      * @param string $name
      * @param string|null $title
-     * @param array $parameters
+     * @param mixed $parameters
      * @param array $attributes
      *
      * @return string
      */
-    function link_to_route(string $name, string $title = null, array $parameters = [], array $attributes = []): string
+    function link_to_route(string $name, string $title = null, mixed $parameters = [], array $attributes = []): string
     {
         return app('html')->linkRoute($name, $title, $parameters, $attributes);
     }
