@@ -84,7 +84,7 @@ class FormBuilder
      *
      * @var array
      */
-    protected array $reserved = ['method', 'url', 'route', 'action', 'files', 'method_attributes'];
+    protected array $reserved = ['method', 'url', 'route', 'action', 'files'];
 
     /**
      * The form methods that should be spoofed, in uppercase.
@@ -142,12 +142,17 @@ class FormBuilder
     public function open(array $options = []): HtmlString|string
     {
         $method = Arr::get($options, 'method', 'post');
+        $method_attributes = [];
+
+        if (is_array($method)) {
+            $method_attributes = $method;
+            $method = Arr::get($method, 'value', 'post');
+        }
 
         // We need to extract the proper method from the attributes. If the method is
         // something other than GET or POST we'll use POST since we will spoof the
         // actual method since forms don't support the reserved methods in HTML.
         $attributes['method'] = $this->getMethod($method);
-
         $attributes['action'] = $this->getAction($options);
 
         $attributes['accept-charset'] = 'UTF-8';
@@ -157,7 +162,7 @@ class FormBuilder
          * field that will instruct the Symfony request to pretend the method is a
          * different method than it actually is, for convenience from the forms.
          **/
-        $append = $this->getAppendage($method, Arr::get($options, 'method_attributes', null));
+        $append = $this->getAppendage($method, $method_attributes);
 
         if (isset($options['files']) && $options['files']) {
             $options['enctype'] = 'multipart/form-data';
