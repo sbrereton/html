@@ -135,11 +135,11 @@ class FormBuilder
     /**
      * Open up a new HTML form.
      *
-     * @param  array $options
+     * @param array $options
      *
-     * @return string
+     * @return HtmlString|string
      */
-    public function open(array $options = []): string
+    public function open(array $options = []): HtmlString|string
     {
         $method = Arr::get($options, 'method', 'post');
 
@@ -179,7 +179,7 @@ class FormBuilder
         **/
         $attributes = $this->html->attributes($attributes, 'form');
 
-        return $this->toHtmlString('<form' . $attributes . '>' . $append)->toHtml();
+        return $this->toHtmlString('<form' . $attributes . '>' . $append);
     }
 
     /**
