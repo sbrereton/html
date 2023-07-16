@@ -40,5 +40,52 @@ return [
         'checkbox',
         'hidden',
         'option'
+    ],
+
+    /**
+     * If attributes are specified in the element it will be overwritten by that
+     */
+    'default_attributes' => [
+        'all' => [
+            'class' => [
+                /**
+                 * This does not get overwritten, forcing it to be on everything:
+                 * 'form-control' => false,
+                 * This will only appear if class is not set:
+                 * 'sometimes-control' => true,
+                 **/
+            ],
+        ],
+        /**
+         * Here are the allowed form types
+         */
+        'text' => [],
+        'password' => [],
+        'range' => [],
+        'hidden' => [],
+        'search' => [],
+        'email' => [],
+        'tel' => [],
+        'number' => [],
+        'date' => [],
+        'datetime' => [],
+        'datetime-local' => [],
+        'time' => [],
+        'url' => [],
+        'week' => [],
+        'file' => [],
+        'textarea' => [],
+        'select' => [],
+        'optionGroup' => [],
+        'option' => [],
+        'placeholder' => [],
+        'checkbox' => [],
+        'radio' => [],
+        'reset' => [],
+        'image' => [],
+        'month' => [],
+        'color' => [],
+        'submit' => [],
+        'button' => []
     ]
 ];

@@ -143,12 +143,16 @@ class FormBuilderTest extends PHPUnit\Framework\TestCase
         $form3 = $this->formBuilder->input('date', 'foobar', null, ['class' => 'span2']);
         $form4 = $this->formBuilder->input('hidden', 'foo', true);
         $form6 = $this->formBuilder->input('checkbox', 'foo-check', true);
+        $form7 = $this->formBuilder->input('datetime', 'foo-time');
+        $form8 = $this->formBuilder->input('datetime-local', 'foo-time-local');
 
         $this->assertEquals('<input name="foo" type="text">', $form1);
         $this->assertEquals('<input name="foo" type="text" value="foobar">', $form2);
         $this->assertEquals('<input class="span2" name="foobar" type="date">', $form3);
         $this->assertEquals('<input name="foo" type="hidden" value="1">', $form4);
         $this->assertEquals('<input name="foo-check" type="checkbox" value="1">', $form6);
+        $this->assertEquals('<input name="foo-time" type="datetime">', $form7);
+        $this->assertEquals('<input name="foo-time-local" type="datetime-local">', $form8);
     }
 
     public function testMacroField()
