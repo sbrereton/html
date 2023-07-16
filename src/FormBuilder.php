@@ -46,9 +46,9 @@ class FormBuilder
     /**
      * The CSRF token used by the form builder.
      *
-     * @var string
+     * @var null|string
      */
-    protected string $csrfToken;
+    protected ?string $csrfToken;
 
     /**
      * Consider Request variables while auto fill.
