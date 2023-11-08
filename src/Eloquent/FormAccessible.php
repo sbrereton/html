@@ -28,7 +28,7 @@ trait FormAccessible
         // If the attribute is listed as a date, we will convert it to a DateTime
         // instance on retrieval, which makes it quite convenient to work with
         // date fields without having to create a mutator for each property.
-        if (in_array($key, $this->getDates())) {
+        if (in_array($key, $this->getAllDateCastableAttributes())) {
             if (! is_null($value)) {
                 $value = $this->asDateTime($value);
             }
@@ -63,7 +63,21 @@ trait FormAccessible
         // No form mutator, let the model resolve this
         return data_get($this, $key);
     }
+    
+    /**
+     * Get all attributes that should be converted to dates including timestamps and user-defined.
+     *
+     * @return array<string>
+     */
+    public function getAllDateCastableAttributes(): array
+    {
+        $dateAttributes = array_filter(
+            array_keys($this->getCasts()), fn (string $key): bool => $this->isDateCastable($key)
+        );
 
+        return array_unique([...$dateAttributes, ...$this->getDates()]);
+    }
+    
     /**
      * Check for a nested model.
      *
