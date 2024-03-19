@@ -13,7 +13,11 @@ return [
             'disabled',
             'checked'
         ],
-
+    
+        'option' => [
+            'value'
+        ],
+    
         /**
          * *** DO NOT REMOVE THIS ONE UNLESS YOU KNOW WHAT YOU ARE DOING
          * *** THIS CAN VERY EASILY LEAD TO YOU OUTPUTTING USERS HASHED PASSWORDS
