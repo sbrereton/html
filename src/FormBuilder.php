@@ -1335,7 +1335,7 @@ class FormBuilder
         if (! is_null($old) && $name !== '_method') {
             return $old;
         }
-        if (function_exists('app')) {
+        if (function_exists('app') && !empty(app('Illuminate\Routing\Router')->current())) {
             $hasNullMiddleware = in_array(
                     'Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull',
                     app('Illuminate\Routing\Router')->gatherRouteMiddleware(app('Illuminate\Routing\Router')->current())
